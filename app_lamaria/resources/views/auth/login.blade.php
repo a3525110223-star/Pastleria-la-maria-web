@@ -44,5 +44,6 @@
             <footer>Sistema de gestión Pastelería La María</footer>
         </section>
     </main>
+    <script src="{{ asset('js/validaciones.js') }}" defer></script>
 </body>
 </html>

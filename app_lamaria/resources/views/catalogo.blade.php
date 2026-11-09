@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#6a5492">
     <title>Catálogo | Pastelería La María</title>
     <link rel="stylesheet" href="{{ asset('css/catalogo.css') }}">
+    <script src="{{ asset('js/empresa.js') }}" defer></script>
     <script src="{{ asset('js/catalogo.js') }}" defer></script>
 </head>
 <body>
@@ -23,6 +24,7 @@
     <main
         class="catalog-page"
         id="catalogo-app"
+        data-api-empresa="{{ url('/api/empresa') }}"
         data-api-productos="{{ url('/api/productos') }}"
         data-api-categorias="{{ url('/api/categorias') }}"
         data-whatsapp="{{ $numeroWhatsapp ?? '' }}"
@@ -31,6 +33,29 @@
             <p class="eyebrow">Pastelería artesanal</p>
             <h1 id="catalog-title">Un detalle dulce para cada ocasión</h1>
             <p>Explora nuestro catálogo y encuentra tu próximo favorito.</p>
+        </section>
+
+        <section class="company-section" id="seccion-empresa" aria-labelledby="empresa-nombre">
+            <p class="eyebrow">Conócenos</p>
+            <h2 id="empresa-nombre">Cargando información...</h2>
+            <p class="company-description" id="empresa-descripcion"></p>
+            <div class="company-values">
+                <article class="company-card">
+                    <h3>Misión</h3>
+                    <p id="empresa-mision">Cargando información...</p>
+                </article>
+                <article class="company-card">
+                    <h3>Visión</h3>
+                    <p id="empresa-vision">Cargando información...</p>
+                </article>
+            </div>
+            <div class="company-contact">
+                <p><strong>Teléfono:</strong> <span id="empresa-telefono">Cargando...</span></p>
+                <p><strong>Dirección:</strong> <span id="empresa-direccion">Cargando...</span></p>
+                <p><strong>Correo:</strong> <span id="empresa-email">Cargando...</span></p>
+                <p><strong>Horario:</strong> <span id="empresa-horario">Cargando...</span></p>
+            </div>
+            <p class="catalog-status" id="estado-empresa" role="status" aria-live="polite"></p>
         </section>
 
         <section class="catalog-section" aria-labelledby="products-title">

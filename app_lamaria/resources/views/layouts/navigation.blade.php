@@ -13,7 +13,7 @@
            class="sidebar_link {{ request()->routeIs('dashboard') ? 'is-active' : '' }}"
            @if(request()->routeIs('dashboard')) aria-current="page" @endif>
             <i class="fa-solid fa-chart-line sidebar_icon" aria-hidden="true"></i>
-            <span>Dashboard</span>
+            <span>Panel principal</span>
         </a>
         <a href="{{ route('productos.index') }}"
            class="sidebar_link {{ request()->routeIs('productos.*') ? 'is-active' : '' }}"

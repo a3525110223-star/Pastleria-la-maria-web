@@ -133,7 +133,7 @@
                             onerror="this.style.display='none'; document.getElementById('error-imagen-actual').style.display='block';"
                         >
                         <p id="error-imagen-actual" class="form-help" style="display:none;">
-                            No se pudo cargar la imagen. Verifica la ruta almacenada en image_url.
+                            No se pudo cargar la imagen. Revisa la ruta guardada en image_url.
                         </p>
                     @else
                         <p class="form-help">Este producto todavía no tiene una fotografía registrada.</p>
@@ -222,7 +222,7 @@
                                 <form
                                     action="{{ route('productos.destroy', $producto->id_producto) }}"
                                     method="POST"
-                                    onsubmit="return confirm('¿Estás seguro de eliminar este producto?');"
+                                    onsubmit="return confirm('¿Quieres eliminar este producto?');"
                                 >
                                     @csrf
                                     @method('DELETE')

@@ -6,6 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class CatalogApiTest extends TestCase
@@ -106,5 +107,36 @@ class CatalogApiTest extends TestCase
             ->getJson('/api/categorias')
             ->assertOk()
             ->assertHeader('Access-Control-Allow-Origin', 'http://localhost:5500');
+    }
+
+    public function test_json_http_errors_are_returned_in_spanish(): void
+    {
+        $this->getJson('/api/no-existe')
+            ->assertNotFound()
+            ->assertJsonPath('message', 'No encontramos lo que buscas. Revisa la dirección e inténtalo de nuevo.');
+    }
+
+    public function test_json_authentication_errors_are_returned_in_spanish(): void
+    {
+        Route::middleware('auth')->get('/api/requiere-sesion', fn () => response()->json(['success' => true]));
+
+        $this->getJson('/api/requiere-sesion')
+            ->assertUnauthorized()
+            ->assertJsonPath('message', 'Tu sesión no está activa. Inicia sesión para continuar.');
+    }
+
+    public function test_server_errors_show_the_spanish_page_without_debug_details(): void
+    {
+        config(['app.debug' => false]);
+
+        Route::get('/error-de-prueba', function () {
+            throw new \RuntimeException('English debug detail');
+        });
+
+        $this->get('/error-de-prueba')
+            ->assertInternalServerError()
+            ->assertSee('Algo salió mal')
+            ->assertSee('Ocurrió un problema en el servidor.')
+            ->assertDontSee('English debug detail');
     }
 }

@@ -38,7 +38,7 @@
                             <div class="table-actions">
                                 <a href="{{ route('users.edit', $user) }}" class="btn btn--secondary">Editar</a>
                                 <form action="{{ route('users.destroy', $user) }}" method="POST"
-                                      onsubmit="return confirm('¿Confirma eliminar este usuario?');">
+                                      onsubmit="return confirm('¿Quieres eliminar este usuario?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn--danger">Eliminar</button>

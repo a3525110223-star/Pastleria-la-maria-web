@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Dashboard | La María')
-@section('header', 'Dashboard')
+@section('title', 'Panel principal | La María')
+@section('header', 'Panel principal')
 @section('content')
-<h2 class="page-heading">Bienvenido</h2>
+<h2 class="page-heading">Bienvenido, {{ auth()->user()->name }}</h2>
 <p class="page-description">
     Administra y consulta la información de Pastelería La María.
 </p>

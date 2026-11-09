@@ -33,7 +33,7 @@
                             <div class="table-actions">
                                 <a href="{{ route('roles.edit', $role) }}" class="btn btn--secondary">Editar</a>
                                 <form action="{{ route('roles.destroy', $role) }}" method="POST"
-                                      onsubmit="return confirm('¿Confirma eliminar este rol?');">
+                                      onsubmit="return confirm('¿Quieres eliminar este rol?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn--danger">Eliminar</button>

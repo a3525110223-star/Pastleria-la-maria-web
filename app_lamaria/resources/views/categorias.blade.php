@@ -98,7 +98,7 @@
                             <td>
                                 <div class="table-actions">
                                     <a href="{{ route('categorias.edit', $categoria->id_categoria) }}" class="btn btn--secondary">Editar</a>
-                                    <form action="{{ route('categorias.destroy', $categoria->id_categoria) }}" method="POST" onsubmit="return confirm('¿Deseas eliminar esta categoría?');">
+                                    <form action="{{ route('categorias.destroy', $categoria->id_categoria) }}" method="POST" onsubmit="return confirm('¿Quieres eliminar esta categoría?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn--danger">Eliminar</button>

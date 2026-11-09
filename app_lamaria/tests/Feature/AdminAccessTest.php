@@ -27,6 +27,33 @@ class AdminAccessTest extends TestCase
         $this->get('/empresa')->assertRedirect(route('login'));
     }
 
+    public function test_required_login_fields_show_spanish_validation_messages(): void
+    {
+        $this->from('/login')
+            ->post('/login', ['email' => '', 'password' => ''])
+            ->assertRedirect('/login')
+            ->assertSessionHasErrors(['email', 'password']);
+
+        $this->get('/login')
+            ->assertSee('Completa el campo correo electrónico.')
+            ->assertSee('Completa el campo contraseña.')
+            ->assertSee('validaciones.js');
+    }
+
+    public function test_invalid_login_shows_a_spanish_error_message(): void
+    {
+        $this->from('/login')
+            ->post('/login', [
+                'email' => 'nadie@lamaria.test',
+                'password' => 'Incorrecta123!',
+            ])
+            ->assertRedirect('/login')
+            ->assertSessionHasErrors('email');
+
+        $this->get('/login')
+            ->assertSee('El correo o la contraseña no son correctos. Verifica tus datos e inténtalo de nuevo.');
+    }
+
     public function test_login_and_logout_complete_the_authenticated_session_flow(): void
     {
         $user = $this->userWithRole('Administrador');
@@ -49,7 +76,9 @@ class AdminAccessTest extends TestCase
         $this->get('/usuarios')->assertForbidden();
         $this->get('/users')->assertForbidden();
         $this->get('/empresa')->assertForbidden();
-        $this->get('/roles')->assertForbidden();
+        $this->get('/roles')
+            ->assertForbidden()
+            ->assertSee('No tienes permiso para acceder a esta sección.');
         $this->get('/dashboard')
             ->assertOk()
             ->assertDontSee(route('users.index'))
@@ -57,10 +86,22 @@ class AdminAccessTest extends TestCase
             ->assertDontSee(route('roles.index'));
     }
 
+    public function test_not_found_page_is_displayed_in_spanish(): void
+    {
+        $this->get('/esta-pagina-no-existe')
+            ->assertNotFound()
+            ->assertSee('No encontramos esta página')
+            ->assertSee('Revisa la dirección o vuelve al catálogo para seguir explorando.');
+    }
+
     public function test_admin_can_access_users_and_empresa_and_sees_admin_menu_items(): void
     {
-        $this->actingAs($this->userWithRole('Administrador'));
+        $admin = $this->userWithRole('Administrador');
+        $this->actingAs($admin);
 
+        $this->get('/dashboard')
+            ->assertOk()
+            ->assertSee('Bienvenido, '.$admin->name);
         $this->get('/usuarios')
             ->assertOk()
             ->assertSee(route('empresa.edit'))
@@ -85,6 +126,20 @@ class AdminAccessTest extends TestCase
         $created = User::where('email', 'empleado@lamaria.com')->firstOrFail();
         $this->assertTrue(Hash::check('Pasteleria123!', $created->password));
         $this->assertTrue($created->hasRole('Empleado'));
+
+        $this->from('/usuarios/create')
+            ->post('/usuarios', [
+                'name' => 'Correo duplicado',
+                'email' => $created->email,
+                'role_id' => $employeeRole->id_rol,
+                'password' => 'Pasteleria123!',
+                'password_confirmation' => 'Pasteleria123!',
+            ])
+            ->assertRedirect('/usuarios/create')
+            ->assertSessionHasErrors('email');
+
+        $this->get('/usuarios/create')
+            ->assertSee('Ese correo electrónico ya está registrado. Usa otro.');
 
         $this->post('/usuarios', [
             'name' => 'Cliente',

@@ -60,6 +60,14 @@
                    value="{{ old('ubicacion', $empresa->ubicacion) }}" required>
         </div>
         <div class="form-group">
+            <label for="mision" class="form-label">Misión</label>
+            <textarea id="mision" name="mision" class="form-control form-control--textarea" rows="3" maxlength="2000">{{ old('mision', $empresa->mision) }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="vision" class="form-label">Visión</label>
+            <textarea id="vision" name="vision" class="form-control form-control--textarea" rows="3" maxlength="2000">{{ old('vision', $empresa->vision) }}</textarea>
+        </div>
+        <div class="form-group">
             <label for="horario_normal" class="form-label">Horario normal *</label>
             <input id="horario_normal" name="horario_normal" class="form-control" maxlength="255"
                    value="{{ old('horario_normal', $empresa->horario_normal) }}" required>

@@ -17,6 +17,8 @@ class EmpresaController extends Controller
                 'numero_whatsapp' => '5550000000',
                 'email' => 'contacto@lamaria.com',
                 'ubicacion' => 'Av. Principal #123',
+                'mision' => null,
+                'vision' => null,
                 'horario_normal' => 'Lunes a Sábado de 8:00 AM a 8:00 PM',
             ]
         );
@@ -34,6 +36,8 @@ class EmpresaController extends Controller
             'numero_whatsapp' => 'required|string|max:20',
             'email' => 'required|email|max:100',
             'ubicacion' => 'required|string|max:255',
+            'mision' => 'nullable|string|max:2000',
+            'vision' => 'nullable|string|max:2000',
             'horario_normal' => 'required|string|max:255',
             'horario_especial' => 'nullable|string|max:255',
             'descripcion' => 'nullable|string',
@@ -48,6 +52,8 @@ class EmpresaController extends Controller
                 'numero_whatsapp' => '5550000000',
                 'email' => 'contacto@lamaria.com',
                 'ubicacion' => 'Av. Principal #123',
+                'mision' => null,
+                'vision' => null,
                 'horario_normal' => 'Lunes a Sábado de 8:00 AM a 8:00 PM',
             ]
         );

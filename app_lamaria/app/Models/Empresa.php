@@ -16,6 +16,8 @@ class Empresa extends Model
         'numero_whatsapp',
         'email',
         'ubicacion',
+        'mision',
+        'vision',
         'horario_normal',
         'horario_especial',
         'descripcion',

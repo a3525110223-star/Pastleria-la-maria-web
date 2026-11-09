@@ -13,7 +13,7 @@ class AdminMiddleware
         $user = $request->user();
 
         if (!$user || !$user->isAdmin()) {
-            abort(403, 'Acceso denegado. Se requieren privilegios de Administrador.');
+            abort(403, 'No tienes permiso para acceder a esta sección.');
         }
 
         return $next($request);
